@@ -117,23 +117,49 @@
       --shadow-lg: 0 10px 20px rgba(0,0,0,0.1);
     }
 
-    *{box-sizing:border-box}
-    body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Inter,Helvetica,Arial,sans-serif;background:radial-gradient(1200px 600px at 10% -10%, #ffffff, #ffffff);color:var(--ink)}
-    h1,h2{margin:0 0 .5rem}
-    h1{font-size:clamp(26px,3vw,36px)}
-    h2{font-size:clamp(18px,2vw,24px);color:var(--muted)}
-    p{margin:.5rem 0 1rem;color:#ffffff}
-    .wrap{max-width:1100px;margin:auto;padding:32px}
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.slider {
+      position: relative;
+      height: 50px;
+      width: 300px;
+      overflow: hidden;
+    }
 
-    /* 1) Horizontal sliding marquee */
-    .marquee{width:100%;white-space:nowrap;overflow:hidden}
-    .marquee .line{display:inline-block; padding-left:100%; animation:marquee 18s infinite}
-    .marquee b{margin:0 1rem;color:#000000}
-@keyframes marquee {
-  0%   { transform: translateX(-100%); } /* start from left side */
-  100% { transform: translateX(0%); }   /* move fully to the right */
-}
+    .slide-text {
+      position: absolute;
+      width: 100%;
+      text-align: left;
+      font-size: 28px;
+      font-family: "Maven Pro";
+
+      margin-left: -0.1rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeSlide 12s infinite;
+    }
+
+    .slide-text:nth-child(1) { animation-delay: 0s; }
+    .slide-text:nth-child(2) { animation-delay: 3s; }
+    .slide-text:nth-child(3) { animation-delay: 6s; }
+    .slide-text:nth-child(4) { animation-delay: 9s; }
+    .slide-text:nth-child(5) { animation-delay: 12s; }
+    .slide-text:nth-child(6) { animation-delay: 15s; }
+    .slide-text:nth-child(7) { animation-delay: 18s; }
+    .slide-text:nth-child(8) { animation-delay: 21s; }
+    .slide-text:nth-child(9) { animation-delay: 24s; }
+    .slide-text:nth-child(9) { animation-delay: 27s; }
+    .slide-text:nth-child(19) { animation-delay: 30s; }
+
+
+
+
+
+    @keyframes fadeSlide {
+      0%   { opacity: 0; transform: translateY(30px); }
+      10%  { opacity: 1; transform: translateY(0); }
+      25%  { opacity: 1; transform: translateY(0); }
+      35%  { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 0; transform: translateY(-30px); }
+    }
   .modal {
     display: none; /* Hidden by default */
     position: fixed;
@@ -311,6 +337,8 @@ nav a:focus {
   min-height: 1.0em;
   transition: all 0.3s ease-in-out; /* Smooth visual transition */
   display: flex;
+        margin-left: 1rem;
+
 }
 
 .cursor {
@@ -324,6 +352,30 @@ nav a:focus {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+/* your existing styles stay as they are */
+
+/* --- Add only this --- */
+@media (max-width: 768px) {
+  .slider {
+    display: flex;              /* flexbox only on phones */
+    justify-content: center;    /* center horizontally */
+    align-items: center;        /* center vertically if you want */
+    text-align: center;         /* center text inside */
+      margin-left: 1rem;
+
+  }
+
+  .slide-text {
+    width: 100%;                /* span full width so text-align works */
+    text-align: center;          /* center text */
+    display: flex;               /* helps center emoji + text */
+    justify-content: center;
+          margin-left: 5rem;
+
+
+  }
+}
+
 
 
 
@@ -414,7 +466,8 @@ nav a:focus {
 
   .contact-content {
     flex-direction: column;
-    padding: 0 1rem;
+    padding: 0 0rem;
+    
   }
 }
 
@@ -650,18 +703,11 @@ nav a:focus {
       </div>
 
       <h1>Connecting Work <br>to Worth</h1>
-      
-     <!-- 1) Horizontal sliding marquee -->
-      <section class="card">
-        <div class="demo">
-          <div class="marquee" aria-label="sliding marquee">
-            <div class="line">
-              <b>Plumbing</b> • <b>Electrical</b> • <b>Carpentry</b> • <b>Welding</b> • <b>Painting</b> • <b>Masonry</b> • <b>Logistics</b> • <b>Field Support</b> 
-              <b>Plumbing</b> • <b>Electrical</b> • <b>Carpentry</b> • <b>Welding</b> • <b>Painting</b> • <b>Masonry</b> • <b>Logistics</b> • <b>Field Support</b> 
-            </div>
-          </div>
-        </div>
-      </section>
+       <div class="slider">
+    <div class="slide-text"> Construction </div>
+    <div class="slide-text"> Agriculture </div>
+    <div class="slide-text"> Helpers</div>
+    <div class="slide-text"> Roofing</div>  </div>
       <p>We match people to purpose using smart technology to turn every job into meaningful opportunity.</p>
 
       <div class="hero-buttons">
@@ -674,9 +720,11 @@ nav a:focus {
       <button class="close-btn" id="close-popup">&times;</button>
       <h2>We are launching soon </h2>
       <p>Please provide your email to get the updates</p>
-      <form onsubmit="sendEmail(event)">
+      <form onsubmit="sendEmail(event)" action="mailto:conecxia@gmail.com?subject=I like to get the early access of the app" method="post" enctype="text/plain">
     <input type="email" id="user-email" placeholder="Enter Email" autocomplete="email" required>
-    <button type="submit" class="submit-btn">Submit</button>
+<a href="mailto:conecxia@gmail.com?subject=I like to get the early access of the app">
+  <button type="button" class="submit-btn">Submit</button>
+</a>
 </form>
 
 
@@ -747,7 +795,7 @@ nav a:focus {
           <button type="button" onclick="sendViaGmail()">Send Via Mail</button>
          <div id="contact-success" role="alert" aria-live="polite">Thank you! We'll get back to you soon.</div></form>
       </div>
-      <script>
+     <script>
   function sendViaGmail() {
     const name = document.getElementById('contact-name').value;
     const email = document.getElementById('contact-email').value;
@@ -755,12 +803,22 @@ nav a:focus {
 
     const subject = encodeURIComponent("Message from Website");
     const body = encodeURIComponent(`Name: ${name}\n\nEmail: ${email}\n\nMessage:\n\n${message}`);
-    
-    const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=info@workwalaa.com&su=${subject}&body=${body}`;
-    
-    window.open(gmailURL, '_blank');
+
+    // Detect if user is on mobile
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      // On phones → open Gmail app (mailto)
+      const mailtoURL = `mailto:info@workwalaa.com?subject=${subject}&body=${body}`;
+      window.location.href = mailtoURL;
+    } else {
+      // On desktop → open Gmail website as before
+      const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=info@workwalaa.com&su=${subject}&body=${body}`;
+      window.open(gmailURL, '_blank');
+    }
   }
 </script>
+
 
     </section>
   </main>
@@ -776,7 +834,6 @@ nav a:focus {
 
     <!-- Right: Links -->
     <nav class="footer-section footer-links" aria-label="Footer navigation">
-      <a href="#contact">FAQ</a>
 <!-- Trigger Button -->
 <a href="#" id="termsBtn">Terms of Service</a>
 <div id="termsModal" class="modal">
@@ -1113,19 +1170,30 @@ window.addEventListener("click", function(e) {
     });
   </script>
 
-  <script>
+<script>
 function sendEmail(event) {
-    event.preventDefault(); // Prevent form from refreshing
+    event.preventDefault(); // Prevent form refresh
     const userEmail = document.getElementById("user-email").value;
 
     const subject = "I would like to install the beta version of app";
-    const body = `Hello,\n\nMy email: ${userEmail}\n\nI would like to install the beta version of the app.`;
+    const body = `Hello,%0D%0A%0D%0AMy email: ${encodeURIComponent(userEmail)}%0D%0A%0D%0AI would like to install the beta version of the app.`;
 
-    const mailtoLink = `mailto:conecxia@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // Detect if user is on mobile
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    window.location.href = mailtoLink;
+    if (isMobile) {
+        // On mobile → open Gmail app using mailto
+        window.location.href = `mailto:conecxia@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    } else {
+        // On PC → open Gmail Web directly
+        window.open(
+          `https://mail.google.com/mail/?view=cm&fs=1&to=conecxia@gmail.com&su=${encodeURIComponent(subject)}&body=${body}`,
+          "_blank"
+        );
+    }
 }
 </script>
+
 
 
 </body>
