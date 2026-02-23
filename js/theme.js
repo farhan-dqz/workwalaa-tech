@@ -2,7 +2,14 @@
 // THEME TOGGLER FUNCTIONALITY
 // =========================================
 
-document.addEventListener('DOMContentLoaded', () => {
+// Apply theme immediately to prevent FOUC
+const savedTheme = localStorage.getItem('workwalaa_theme');
+if (savedTheme === 'light') {
+  document.documentElement.classList.add('light-theme');
+  document.body.classList.add('light-theme');
+}
+
+function initializeTheme() {
   // Also apply class to body if it was added to documentElement
   if (document.documentElement.classList.contains('light-theme')) {
     document.body.classList.add('light-theme');
@@ -29,4 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeTheme);
+} else {
+  initializeTheme();
+}

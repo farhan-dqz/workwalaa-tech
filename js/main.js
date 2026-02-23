@@ -2,12 +2,6 @@
 // MAIN JAVASCRIPT FUNCTIONALITY
 // =========================================
 
-// Apply theme immediately to prevent FOUC
-const savedTheme = localStorage.getItem('workwalaa_theme');
-if (savedTheme === 'light') {
-  document.documentElement.classList.add('light-theme');
-}
-
 // Navbar Scroll Effect
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('navbar');

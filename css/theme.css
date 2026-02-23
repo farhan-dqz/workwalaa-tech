@@ -106,7 +106,20 @@ body.light-theme .footer-brand p {
 
 /* Backgrounds & Overlays */
 body.light-theme .hero {
-  background-color: rgba(244, 246, 248, 0.85);
+  background: linear-gradient(135deg, rgba(244, 246, 248, 0.95), rgba(244, 246, 248, 0.85));
+  background-blend-mode: overlay;
+}
+
+body.light-theme .hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(242, 202, 0, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 body.light-theme .contact-form input,
@@ -123,8 +136,45 @@ body.light-theme .contact-form select option {
 }
 
 body.light-theme nav.scrolled {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Logo and Navigation */
+body.light-theme .logo-text {
+  color: var(--text-main);
+}
+
+body.light-theme .nav-links a {
+  color: var(--text-main);
+}
+
+body.light-theme .nav-links a:hover,
+body.light-theme .nav-links a.active {
+  color: var(--brand-yellow);
+}
+
+/* Buttons */
+body.light-theme .btn-primary {
+  background: var(--brand-yellow);
+  color: #000;
+}
+
+body.light-theme .btn-primary:hover {
+  background: var(--brand-yellow-hvr);
+  color: #000;
+}
+
+body.light-theme .btn-secondary {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border-color: var(--glass-border);
+}
+
+body.light-theme .btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Box Shadows & Glows */

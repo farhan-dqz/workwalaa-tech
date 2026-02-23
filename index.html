@@ -70,7 +70,6 @@
 
   <!-- JavaScript Files -->
   <script src="js/wishlist.js"></script>
-  <script src="js/theme.js"></script>
   <script src="js/vanta.js"></script>
 
   <!-- Three.js & Vanta.js for ambient background -->
@@ -107,7 +106,14 @@
     }
 
     // Load components when DOM is ready
-    document.addEventListener('DOMContentLoaded', loadComponents);
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadComponents();
+      
+      // Load theme functionality after components are loaded
+      const script = document.createElement('script');
+      script.src = 'js/theme.js';
+      document.body.appendChild(script);
+    });
   </script>
 
 </body>

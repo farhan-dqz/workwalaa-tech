@@ -415,22 +415,20 @@ nav.scrolled {
 
 /* =========================================
    SERVICES SECTION
+   =========================================
+   SECTION HEADERS
    ========================================= */
-.services-section {
-  padding: 6rem 5%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
   margin-bottom: 1rem;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
 }
 
 .section-header h2 span {
@@ -665,6 +663,168 @@ nav.scrolled {
 }
 
 /* =========================================
+   SLIDING TESTIMONIALS
+   ========================================= */
+.testimonial-separator {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brand-yellow), transparent);
+  margin: 0 auto 4rem auto;
+  max-width: 200px;
+  opacity: 0.5;
+}
+
+.testimonial-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.testimonial-header .section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(242, 202, 0, 0.1);
+  border: 1px solid rgba(242, 202, 0, 0.3);
+  color: var(--brand-yellow);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.testimonial-header h2 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+}
+
+.testimonial-header h2 span {
+  color: var(--brand-yellow);
+}
+
+.testimonial-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.testimonial-slider {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 0;
+}
+
+.fade-edge-left,
+.fade-edge-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.fade-edge-left {
+  left: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.fade-edge-right {
+  right: 0;
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.testimonial-track {
+  display: flex;
+  gap: 2rem;
+  animation: slideTestimonials 24s linear infinite;
+}
+
+.testimonial-slider:hover .testimonial-track {
+  animation-play-state: paused;
+}
+
+.testimonial-card {
+  min-width: 350px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.testimonial-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quote-icon {
+  color: var(--brand-yellow);
+  font-size: 2rem;
+  opacity: 0.6;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 4px;
+  color: var(--brand-yellow);
+  font-size: 1.2rem;
+}
+
+.testimonial-card p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--brand-yellow);
+}
+
+.author-info h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.author-info span {
+  color: var(--brand-yellow);
+  font-size: 0.85rem;
+}
+
+@keyframes slideTestimonials {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* =========================================
    CONTACT SECTION
    ========================================= */
 .contact-section {
@@ -869,6 +1029,45 @@ footer {
     gap: 2rem;
   }
 
+  .feature-content {
+    order: 2;
+  }
+
+  .feature-image {
+    order: 1;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .contact-container {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .contact-info {
+    text-align: center;
+  }
+
+  .contact-form {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .testimonial-track {
+    animation-duration: 20s;
+  }
+
+  .testimonial-card {
+    min-width: 300px;
+  }
+
   .nav-links,
   .nav-actions.hidden-mobile {
     display: none !important;
@@ -885,6 +1084,110 @@ footer {
 
   .footer-content {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Employers Section Mobile */
+  .feature-content h3 {
+    font-size: 1.2rem !important;
+  }
+
+  .feature-content h2 {
+    font-size: 2rem !important;
+  }
+
+  .feature-list {
+    gap: 1rem;
+  }
+
+  .feature-item h4 {
+    font-size: 1rem;
+  }
+
+  .feature-item p {
+    font-size: 0.9rem;
+  }
+
+  /* Contact Section Mobile */
+  .contact-info h2 {
+    font-size: 2rem !important;
+  }
+
+  .contact-detail-item {
+    gap: 1rem;
+  }
+
+  .contact-detail-item i {
+    font-size: 1.5rem;
+  }
+
+  .contact-detail-text h4 {
+    font-size: 1rem;
+  }
+
+  .contact-detail-text p {
+    font-size: 0.9rem;
+  }
+
+  /* Form Mobile */
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+
+  /* Testimonials Mobile */
+  .testimonial-card {
+    min-width: 280px;
+    padding: 1.5rem;
+  }
+
+  .testimonial-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .fade-edge-left,
+  .fade-edge-right {
+    width: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra Small Mobile */
+  .feature-content h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .contact-info h2 {
+    font-size: 1.8rem !important;
+  }
+
+  .testimonial-card {
+    min-width: 250px;
+    padding: 1rem;
+  }
+
+  .testimonial-card p {
+    font-size: 0.9rem;
+  }
+
+  .author-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .author-info h4 {
+    font-size: 1rem;
+  }
+
+  .author-info span {
+    font-size: 0.8rem;
   }
 
   /* Hero Mobile Polish */
