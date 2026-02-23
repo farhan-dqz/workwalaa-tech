@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs - Workwalaa</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        :root {
+            --bg-base: #030303;
+            --bg-surface: #0a0a0a;
+            --bg-elevated: #111111;
+
+            --brand-yellow: #f2ca00;
+            --brand-yellow-hvr: #e6c000;
+            --brand-yellow-glow: rgba(242, 202, 0, 0.4);
+
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-blur: blur(12px);
+
+            --text-main: #ffffff;
+            --text-muted: #999999;
+            --text-dark: #000000;
+
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+
+            --transition-smooth: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Ambient Glow Background */
+        .ambient-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at top right, rgba(242, 202, 0, 0.05), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(242, 202, 0, 0.03), transparent 40%);
+        }
+
+        /* =========================================
+       NAVIGATION 
+       ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            background: rgba(3, 3, 3, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-container img {
+            height: 40px;
+        }
+
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-links a.active {
+            border-bottom: 2px solid var(--brand-yellow);
+            padding-bottom: 4px;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            color: var(--brand-yellow);
+            cursor: pointer;
+        }
+
+        /* =========================================
+       HERO SECTION
+       ========================================= */
+        .blogs-hero {
+            padding: 160px 5% 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .blogs-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .blogs-hero h1 span {
+            color: var(--brand-yellow);
+        }
+
+        .blogs-hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+       BLOGS GRID
+       ========================================= */
+        .blogs-section {
+            padding: 2rem 5% 6rem;
+            position: relative;
+        }
+
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            border-color: rgba(242, 202, 0, 0.4);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.08);
+        }
+
+        .blog-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--brand-yellow);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .blog-content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-meta i {
+            color: var(--brand-yellow);
+            margin-right: 5px;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            font-family: 'Outfit', sans-serif;
+            transition: color 0.3s;
+        }
+
+        .blog-card:hover .blog-title {
+            color: var(--brand-yellow);
+        }
+
+        .blog-excerpt {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-read-more {
+            margin-top: auto;
+            color: var(--brand-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+
+        .blog-card:hover .blog-read-more {
+            gap: 10px;
+        }
+
+        /* Featured Blog (Spans 2 columns if space allows) */
+        @media (min-width: 900px) {
+            .blog-featured {
+                grid-column: span 2;
+                flex-direction: row;
+            }
+
+            .blog-featured .blog-image {
+                height: auto;
+                width: 50%;
+            }
+
+            .blog-featured .blog-content {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* =========================================
+       FOOTER 
+       ========================================= */
+        footer {
+            background: #000;
+            padding: 4rem 5% 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 4rem;
+        }
+
+        .footer-brand {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            max-width: 320px;
+            margin-top: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            flex: 2;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-col {
+            min-width: 150px;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            margin-bottom: 1.8rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--brand-yellow);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            width: 100%;
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--brand-yellow);
+        }
+
+        @media (max-width: 768px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <style>
+        /* =========================================
+       THEME OVERRIDES & LIGHT MODE POLISH
+       ========================================= */
+        :root:has(body.light-theme),
+        body.light-theme {
+            --bg-base: #f4f6f8;
+            --bg-surface: #ffffff;
+            --bg-elevated: #fcfcfc;
+
+            --brand-yellow: #dca300;
+            --brand-yellow-glow: rgba(220, 163, 0, 0.15);
+            --brand-yellow-hvr: #b88800;
+
+            --text-main: #111111;
+            --text-muted: #555555;
+
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* THEME BUTTON - DEFAULT (DARK MODE) */
+        .theme-btn {
+            background: rgba(242, 202, 0, 0.1);
+            border: 1px solid rgba(242, 202, 0, 0.3);
+            color: var(--brand-yellow);
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin-left: 15px;
+            box-shadow: 0 0 15px rgba(242, 202, 0, 0.15);
+        }
+
+        .theme-btn:hover {
+            background: var(--brand-yellow);
+            color: #000;
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 0 25px rgba(242, 202, 0, 0.4);
+        }
+
+        /* THEME BUTTON - LIGHT MODE */
+        body.light-theme .theme-btn {
+            background: #ffffff;
+            border: 1px solid var(--glass-border);
+            color: #111;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.light-theme .theme-btn:hover {
+            background: #111;
+            color: #fff;
+        }
+
+        .theme-btn i {
+            transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        body.light-theme .theme-btn i {
+            transform: rotate(360deg);
+        }
+
+        /* LIGHT THEME AESTHETIC FIXES */
+        body.light-theme .logo-text,
+        body.light-theme .blogs-hero h1,
+        body.light-theme .blog-title,
+        body.light-theme .footer-col h4 {
+            color: var(--text-main);
+        }
+
+        body.light-theme .blogs-hero h1 span {
+            background: linear-gradient(135deg, var(--brand-yellow), #222);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-theme .blogs-hero p,
+        body.light-theme .footer-brand p {
+            color: var(--text-muted);
+        }
+
+        body.light-theme nav.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-theme .blog-card {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .blog-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border-color: rgba(220, 163, 0, 0.3);
+            background: #fff;
+        }
+
+        body.light-theme .blog-card:hover .blog-title {
+            color: var(--brand-yellow);
+        }
+
+        body.light-theme footer {
+            background: #fdfdfd;
+            border-top: 1px solid var(--glass-border);
+        }
+    </style>
+    <script>
+        // Apply theme immediately to prevent FOUC
+        const savedTheme = localStorage.getItem('workwalaa_theme');
+        if (savedTheme === 'light') {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="ambient-glow"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo-container">
+            <span class="logo-text">Workwalaa</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="careers.html">Jobs</a>
+            <a href="aboutus.html">About Us</a>
+            <a href="blogs.html" class="active">Blogs</a>
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <i class='bx bx-sun' id="theme-icon"></i>
+            </button>
+        </div>
+        <i class='bx bx-menu menu-toggle'></i>
+    </nav>
+
+    <!-- Hero -->
+    <header class="blogs-hero">
+        <h1>Inside <span>Workwalaa</span></h1>
+        <p>Get the latest updates, stories, hiring insights, and future plans straight from our dynamic ecosystem.</p>
+    </header>
+
+    <!-- BLOGS SECTION -->
+    <section class="blogs-section">
+        <div class="blogs-grid">
+
+            <!-- Blog 1: Featured - Founder's Note -->
+            <article class="blog-card blog-featured">
+                <div class="blog-image">
+                    <div class="blog-badge">Vision</div>
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=800&auto=format&fit=crop"
+                        alt="Founder discussing plans">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class='bx bx-calendar'></i> Oct 15, 2024</span>
+                        <span><i class='bx bx-user'></i> Founder</span>
+                    </div>
+                    <h3 class="blog-title">Founder's Note: The Future Plans for Workwalaa</h3>
+                    <p class="blog-excerpt">As we scale our operations across Kerala and beyond, our core philosophy
+                        remains unchanged: bridging the gap between talent and opportunity with unwavering trust and
+                        transparency. We are heavily investing in AI infrastructure to continuously refine our matching
+                        engine, ensuring that every user finds their perfect fit in record time. Here’s a look into our
+                        roadmap for the next 5 years and how we plan to revolutionize the blue-collar sector.</p>
+                    <a href="#" class="blog-read-more" onclick="event.preventDefault();">Read Full Article <i
+                            class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </article>
+
+            <!-- Blog 2: The Hype Around Workwalaa Assist -->
+            <article class="blog-card">
+                <div class="blog-image">
+                    <div class="blog-badge">New Project</div>
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=600&auto=format&fit=crop"
+                        alt="Technology abstract">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class='bx bx-calendar'></i> Oct 28, 2024</span>
+                    </div>
+                    <h3 class="blog-title">The Hype is Real: Launching Workwalaa Assist</h3>
+                    <p class="blog-excerpt">Our newest initiative is designed to handle on-demand, real-time workforce
+                        deployment. By combining hyper-local tracking with instant verified matching, Workwalaa Assist
+                        promises to connect employers with nearby, ready-to-work professionals in minutes. Join the
+                        waitlist today and be the first to experience the future of shift-based hiring.</p>
+                    <a href="#" class="blog-read-more" onclick="event.preventDefault();">Read Full Article <i
+                            class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </article>
+
+            <!-- Blog 3: How fast is our hiring -->
+            <article class="blog-card">
+                <div class="blog-image">
+                    <div class="blog-badge">Performance</div>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop"
+                        alt="Speed and analytics">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class='bx bx-calendar'></i> Nov 02, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Speed of Hiring: How We Fill Roles in Record Time</h3>
+                    <p class="blog-excerpt">Traditional hiring takes weeks. At Workwalaa, our AI-supported filtering
+                        reduces that to mere days. By maintaining a robust pool of pre-verified candidates, employers
+                        skip the grueling CV screening phase. Discover the metrics behind our 60% faster hiring rate and
+                        how it benefits your business bottom line.</p>
+                    <a href="#" class="blog-read-more" onclick="event.preventDefault();">Read Full Article <i
+                            class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </article>
+
+            <!-- Blog 4: Detailed Customer Reviews -->
+            <article class="blog-card">
+                <div class="blog-image">
+                    <div class="blog-badge">Community</div>
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop"
+                        alt="People talking happily">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class='bx bx-calendar'></i> Nov 10, 2024</span>
+                    </div>
+                    <h3 class="blog-title">What People Are Saying: Unfiltered Workwalaa Reviews</h3>
+                    <p class="blog-excerpt">Don't just take our word for it. We dove deep into the feedback from both
+                        job seekers and corporate partners. From graduates landing their first gig to enterprise HR
+                        managers streamlining their entire recruitment funnel, here are detailed, honest insights into
+                        the Workwalaa experience.</p>
+                    <a href="#" class="blog-read-more" onclick="event.preventDefault();">Read Full Article <i
+                            class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </article>
+
+            <!-- Blog 5: HR Support System -->
+            <article class="blog-card">
+                <div class="blog-image">
+                    <div class="blog-badge">Services</div>
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop"
+                        alt="HR Professional helping a candidate">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class='bx bx-calendar'></i> Nov 18, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Inside Our HR Support System: Guiding You Every Step</h3>
+                    <p class="blog-excerpt">We are more than just an algorithm. Our dedicated HR consultants provide
+                        human-centric support to both candidates preparing for interviews and employers structuring
+                        their job descriptions. Learn how our hands-on support system makes Workwalaa the most reliable
+                        recruitment agency in the region.</p>
+                    <a href="#" class="blog-read-more" onclick="event.preventDefault();">Read Full Article <i
+                            class='bx bx-right-arrow-alt'></i></a>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-container" style="margin-bottom: 1rem;">
+                    <span class="logo-text" style="font-size: 1.2rem;">Workwalaa</span>
+                </div>
+                <p>Connecting Work To Worth.<br><br>Bridging job seekers and employers with trust and dignity.</p>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="index.html">Home</a>
+                    <a href="index.html#job-seekers">Job Seekers</a>
+                    <a href="index.html#employers">Employers</a>
+                    <a href="aboutus.html">About Us</a>
+                    <a href="blogs.html">Blogs</a>
+                    <a href="index.html#contact">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <a href="careers.html">Job Search</a>
+                    <a href="index.html#job-seekers">Resume Building</a>
+                    <a href="index.html#job-seekers">Interview Prep</a>
+                    <a href="index.html#employers">Employer Services</a>
+                    <a href="index.html#employers">Campus Hiring</a>
+                </div>
+                <div class="footer-col" style="display:flex; gap:10px; flex-direction: column;">
+                    <h4>Contact</h4>
+                    <span style="color: var(--text-muted);"><i class='bx bxl-whatsapp'></i> 8921483992</span>
+                    <span style="color: var(--text-muted);"><i class='bx bx-envelope'></i> info@workwalaa.com</span>
+                    <span style="color: var(--text-muted);"><i class='bx bx-map'></i> Kerala, India</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>&copy; 2024 Workwalaa. Made within Kerala.</div>
+            <div class="footer-bottom-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-of-service.html">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggler logic
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.documentElement.classList.contains('light-theme')) {
+                document.body.classList.add('light-theme');
+            }
+
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (themeToggleBtn && themeIcon) {
+                if (document.body.classList.contains('light-theme')) {
+                    themeIcon.classList.replace('bx-sun', 'bx-moon');
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-theme');
+                    document.documentElement.classList.toggle('light-theme');
+
+                    if (document.body.classList.contains('light-theme')) {
+                        localStorage.setItem('workwalaa_theme', 'light');
+                        themeIcon.classList.replace('bx-sun', 'bx-moon');
+                    } else {
+                        localStorage.setItem('workwalaa_theme', 'dark');
+                        themeIcon.classList.replace('bx-moon', 'bx-sun');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
